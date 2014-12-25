@@ -109,3 +109,18 @@ class SAX(object):
                 dist += self._normal_cutoffs[self.a][int(max(self.sax()[i], sax_word_2.sax()[i])) - 1]
                 dist -= self._normal_cutoffs[self.a][int(min(self.sax()[i], sax_word_2.sax()[i]))]
         return dist
+
+
+
+if __name__ == '__main__':
+    x = SAX(np.array(range(0, 20)))
+    y = SAX(np.array(range(20, 0, -1)))
+
+    print x.sax()
+    print x.stringify()
+    print x.min_dist(y)
+    print x.min_dist(x)
+
+
+    print SAX(np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,10,100]), 1, 5).stringify()
+    print SAX(np.array([7,1,4,4,4,4]), 1, 5).stringify()
