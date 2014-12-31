@@ -93,6 +93,14 @@ class SAX(object):
         return buf
 
 
+    def  __str__(self):
+        return self.stringify()
+
+
+    def __repr__(self):
+        return self.stringify()
+
+
     def min_dist(self, sax_word_2):
         """The minimum distance between two SAX words
 

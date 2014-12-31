@@ -10,14 +10,17 @@ corpus = ['This is the first document.',
 X = vectorizer.fit_transform(corpus)
 #print X
 analyze = vectorizer.build_analyzer()
-print analyze("This is a text document to analyze.")
-print vectorizer.get_feature_names()
+# print analyze("This is a text document to analyze.")
+# print vectorizer.get_feature_names()
+# print X.toarray()
+# print vectorizer.transform(['Something completely new.']).toarray()
+
+n = 100
+t = 5
+corpus_a = [SAX(np.random.normal(0, 1, t)).stringify() for i in xrange(n)]
+corpus_b = [SAX(np.random.normal(0, 1.5, t)).stringify() for i in xrange(n)]
+vectorizer = CountVectorizer(min_df=1, analyzer='char', ngram_range=(2, 2))
+X = vectorizer.fit_transform(corpus_a)
+analyze = vectorizer.build_analyzer()
 print X.toarray()
-print vectorizer.transform(['Something completely new.']).toarray()
-
-n = 1000
-ts1 = np.random.normal(0, 1, n)
-ts2 = np.random.normal(0, 1.5, n)
-
-print SAX(ts1).stringify()
-print SAX(ts2).stringify()
+print vectorizer.get_feature_names()
