@@ -9,5 +9,7 @@ corpus = ['This is the first document.',
 X = vectorizer.fit_transform(corpus)
 #print X
 analyze = vectorizer.build_analyzer()
+print analyze("This is a text document to analyze.")
 print vectorizer.get_feature_names()
-X.toarray()
+print X.toarray()
+print vectorizer.transform(['Something completely new.']).toarray()
