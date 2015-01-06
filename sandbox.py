@@ -24,3 +24,25 @@ X = vectorizer.fit_transform(corpus_a)
 analyze = vectorizer.build_analyzer()
 print X.toarray()
 print vectorizer.get_feature_names()
+
+
+corpus_sax = ['accbccabbacbabaccbaaaaacccabcacbcbcabbcaaacbacacac',
+'acacbccacabccacbcacbbccbcbcababcbbabbcabacaaaacbca',
+'abacbcbccbabbcbabccccabacabccbaccaaaccacbabbcababa',
+'cbababbcccbcaaaaacaccaabcabccacbbccbccaccbacbaabcc',
+'aaaacbaaaabcccaacabcccbaaccccbacaabbcacbcabcccbabb',
+'abcaacbabbcacbbccccaaabbaabaccacabccacbccaacaacaac',
+'ccaaaccaaaccabaabbaccbbabccbacbacabbabcabbacbbbacc',
+'cccaacabaacccacccabacbacbcbcaacbabaaabaabbcacbccba',
+'cacacaabbccccabaacccaaacabccabcbaabaaacacccccaaabc',
+'bccbcaaacabbaaccaaacaacaccaaaaacabcbcccaccbbcccbcc']
+
+vectorizer = CountVectorizer(min_df=1, analyzer='char', ngram_range=(1, 2))
+X = vectorizer.fit_transform(corpus_sax)
+analyze = vectorizer.build_analyzer()
+print X.toarray()
+print vectorizer.get_feature_names()
+
+
+
+

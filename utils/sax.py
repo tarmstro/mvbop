@@ -38,12 +38,13 @@ class SAX(object):
                 a: alphabet size (see global normal_cutoffs) -- 2 through 20
         """
         self.series = series
+        self.orig = series
         self.points_per_symbol = points_per_symbol
         self.a = a
         self._standardize()
         self._paa()
         self._sax = np.array([])
-        for mean in self.series:
+        for mean in self.paa:
             i = 0
             for cutoff in self._normal_cutoffs[self.a]:
                 if mean > cutoff:
@@ -57,11 +58,8 @@ class SAX(object):
         Args:
             series: a numpy array of a univariate timeseries
             points_per_symbol: number of data points represented per SAX symbol
-
-        Returns:
-            a numpy array of means of windows points_per_symbol wide
         """
-        self.series = [self.series[i * self.points_per_symbol : (i + 1) * self.points_per_symbol].mean() for i in range(len(self.series) / self.points_per_symbol)]
+        self.paa = [self.series[i * self.points_per_symbol : (i + 1) * self.points_per_symbol].mean() for i in range(len(self.series) / self.points_per_symbol)]
 
 
     def _standardize(self):
@@ -70,9 +68,6 @@ class SAX(object):
 
         Args:
             series: a univariate timeseries
-
-        Returns:
-            A normalized timeseries with mean 0 and std 1
         """
         deviation = np.std(self.series)
         self.series = (self.series - np.mean(self.series)) / (deviation if deviation != 0 else 1)
@@ -80,6 +75,7 @@ class SAX(object):
 
     def sax(self):
         return self._sax
+
 
     def stringify(self):
         """Get the sax string
@@ -129,6 +125,6 @@ if __name__ == '__main__':
     print x.min_dist(y)
     print x.min_dist(x)
 
-
     print SAX(np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,10,100]), 1, 5).stringify()
     print SAX(np.array([7,1,4,4,4,4]), 1, 5).stringify()
+
