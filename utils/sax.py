@@ -59,7 +59,7 @@ class SAX(object):
             series: a numpy array of a univariate timeseries
             points_per_symbol: number of data points represented per SAX symbol
         """
-        self.paa = [self.series[i * self.points_per_symbol : (i + 1) * self.points_per_symbol].mean() for i in range(len(self.series) / self.points_per_symbol)]
+        self.paa = np.array([self.series[i * self.points_per_symbol : (i + 1) * self.points_per_symbol].mean() for i in range(len(self.series) / self.points_per_symbol)])
 
 
     def _standardize(self):
@@ -127,4 +127,3 @@ if __name__ == '__main__':
 
     print SAX(np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,10,100]), 1, 5).stringify()
     print SAX(np.array([7,1,4,4,4,4]), 1, 5).stringify()
-
