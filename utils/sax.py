@@ -4,7 +4,6 @@
 import numpy as np
 import string
 
-
 class SAX(object):
     _normal_cutoffs = {
                         2: [0],
@@ -29,7 +28,7 @@ class SAX(object):
                     }
     _alphabet = string.ascii_lowercase[:19]
 
-    def __init__(self, series, points_per_symbol = 1, a = 3):
+    def __init__(self, series, **kwargs):
         """SAXify the timeseries
 
             Args:
@@ -39,8 +38,8 @@ class SAX(object):
         """
         self.series = series
         self.orig = series
-        self.points_per_symbol = points_per_symbol
-        self.a = a
+        self.points_per_symbol = kwargs.get('points_per_symbol', 1)
+        self.a = kwargs.get('a', 3)
         self._standardize()
         self._paa()
         self._sax = np.array([])
@@ -115,7 +114,6 @@ class SAX(object):
         return dist
 
 
-
 if __name__ == '__main__':
     x = SAX(np.array(range(0, 20)))
     y = SAX(np.array(range(20, 0, -1)))
@@ -125,5 +123,5 @@ if __name__ == '__main__':
     print x.min_dist(y)
     print x.min_dist(x)
 
-    print SAX(np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,10,100]), 1, 5).stringify()
-    print SAX(np.array([7,1,4,4,4,4]), 1, 5).stringify()
+    print SAX(np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,10,100]), points_per_symbol=1, a=5).stringify()
+    print SAX(np.array([7,1,4,4,4,4]), points_per_symbol=1, a=5).stringify()
