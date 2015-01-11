@@ -8,8 +8,8 @@ from utils.sax import SAX
 from utils.SAXTransformer import SAXTransformer
 
 #X, y = samples_generator.make_classification(n_samples=100, n_features=20, n_informative=2, n_redundant=0)
-vectorizer = CountVectorizer(min_df=1, analyzer='char', ngram_range=(1, 10))
-#vectorizer = TfidfVectorizer(min_df=1, analyzer='char', ngram_range=(1, 2))
+cvect = CountVectorizer(min_df=1, analyzer='char', ngram_range=(1, 10))
+tvect = TfidfVectorizer(min_df=1, analyzer='char', ngram_range=(1, 2))
 saxizer = SAXTransformer(points_per_symbol=1)
 clf = svm.LinearSVC()
 
@@ -28,7 +28,7 @@ y = np.array(y)
 
 
 svm_pipe = Pipeline([('saxizer', saxizer),
-                     ('countvect', vectorizer),
+                     ('countvect', cvect),
                      ('svc', clf)])
 score, permutation_scores, pvalue = permutation_test_score(
     svm_pipe, X, y, scoring="accuracy", cv=StratifiedKFold(y, 2), n_permutations=100, n_jobs=4)
