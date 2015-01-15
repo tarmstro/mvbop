@@ -24,13 +24,21 @@ X = np.array(X)
 y = np.array(y)
 
 
-svm_pipe = Pipeline([('saxizer', SAXTransformer(points_per_symbol=1)),
+base_pipe = Pipeline([('saxizer', SAXTransformer(points_per_symbol=1)),
                      ('features', FeatureUnion([('countvect', CountVectorizer(min_df=1, analyzer='char', ngram_range=(1, 10))),
                                                 ('tfidfvect', TfidfVectorizer(min_df=1, analyzer='char', ngram_range=(1, 2)))])),
                      ('svc', svm.LinearSVC())])
-score, permutation_scores, pvalue = permutation_test_score(
-    svm_pipe, X, y, scoring="accuracy", cv=StratifiedKFold(y, 2), n_permutations=5, n_jobs=4)
-print("BoP Classification score %s (pvalue : %s)" % (score, pvalue))
+
+bop_pipe = Pipeline([('saxizer', SAXTransformer(points_per_symbol=1)),
+                     ('features', FeatureUnion([('countvect', CountVectorizer(min_df=1, analyzer='char', ngram_range=(1, 10))),
+                                                ('tfidfvect', TfidfVectorizer(min_df=1, analyzer='char', ngram_range=(1, 2)))])),
+                     ('svc', svm.LinearSVC())])
+
+
+for i in [bop_pipe, base_pipe]:
+    score, permutation_scores, pvalue = permutation_test_score(
+        i, X, y, scoring="accuracy", cv=StratifiedKFold(y, 2), n_permutations=5, n_jobs=4)
+    print("Score %s (pvalue : %s)" % (score, pvalue))
 
 # svm_pipe = Pipeline([('svc', clf)])
 # score, permutation_scores, pvalue = permutation_test_score(
