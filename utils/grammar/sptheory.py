@@ -2,7 +2,11 @@
 http://arxiv.org/pdf/1306.3888.pdf
 """
 
-def mk10(corpus):
+def MK10(corpus):
+    pass
+
+
+def SNPR(corpus):
     pass
 
 
